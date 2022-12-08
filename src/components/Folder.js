@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 
-function Folder({ handleInsertNode = () => {}, explorer }) {
+function Folder({
+  handleInsertNode = () => {},
+  handleDeleteNode = () => {},
+  explorer,
+}) {
   const [expand, setExpand] = useState(false);
   const [showInput, setShowInput] = useState({
     visible: false,
@@ -17,11 +21,16 @@ function Folder({ handleInsertNode = () => {}, explorer }) {
   };
 
   const onAddFolder = (e) => {
+    console.log(explorer.id);
     if (e.keyCode === 13 && e.target.value) {
       handleInsertNode(explorer.id, e.target.value, showInput.isFolder);
-
       setShowInput({ ...showInput, visible: false });
     }
+  };
+
+  const onDeleteFolder = (e) => {
+    console.log(explorer.id);
+    // handleDeleteNode(explorer.id, showInput.isFolder);
   };
 
   if (explorer.isFolder) {
@@ -32,7 +41,10 @@ function Folder({ handleInsertNode = () => {}, explorer }) {
 
           <div>
             <button onClick={(e) => handleNewFolder(e, true)}>Folder +</button>
+            &nbsp;&nbsp;
             <button onClick={(e) => handleNewFolder(e, false)}>File +</button>
+            &nbsp;&nbsp;
+            <button onClick={(e) => onDeleteFolder(e, true)}>Delete</button>
           </div>
         </div>
 
